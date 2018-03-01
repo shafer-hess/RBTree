@@ -43,8 +43,15 @@ Node::getLeft() {
 	return left;
 };
 
+template<typename Key, typename Element>
+Node::getRight() {
+	return right;
+};
 
-
+template<typename Key, typename Element>
+Node::getParent() {
+	return parent;
+}
 
 // The following functions have been provided for you, and do not
 // need to be modified:
