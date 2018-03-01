@@ -10,6 +10,12 @@ template <typename Key, typename Element>
 class Node {
 private:
 	// Add class members here
+	Node * left;
+	Node * right;
+	Node * parent;
+
+	Key key;
+	Element element;
 
 public:
 	// Implement each of these methods
@@ -31,6 +37,12 @@ public:
 	void setElement(const Element& e) {}
 	void setColor(color c) {}
 };
+
+template<typename Key, typename Element>
+Node::getLeft() {
+	return left;
+};
+
 
 
 
