@@ -10,13 +10,13 @@ template <typename Key, typename Element>
 class Node {
 private:
 	// Add class members here
-	Node * left;
-	Node * right;
-	Node * parent;
+	Node<Key, Element> * left;
+	Node<Key, Element> * right;
+	Node<Key, Element> * parent;
 
 	color colorVal;
 	Key key;
-	Element * element;
+	Element element;
 
 public:
 	// Implement each of these methods
@@ -25,18 +25,18 @@ public:
 	// These implementations are only to get the skeleton
 	// code to compile. Ignore the warnings they generate
 	// until you replace their implementations with your own
-	const Key& getKey() const; /*{ Key k; return k; }*/
-	const Element& getElement() const; /*{ Element e; return e; }*/
-	Element& getElement(); /*{ Element e; return e; }*/
+	const Key& getKey() const;
+	const Element& getElement() const;
+	Element& getElement();
 
-	color getColor() const; /*{ return RED; }*/
-	Node * getParent() { return NULL; }
-	Node * getLeft() { return NULL; }
-	Node * getRight() { return NULL; }
+	color getColor() /*const*/; /*{ return RED; }*/
+	Node<Key, Element> * getParent();
+	Node<Key, Element> * getLeft();
+	Node<Key, Element> * getRight();
 
-	void setKey(const Key& k) {}
-	void setElement(const Element& e) {}
-	void setColor(color c) {}
+	void setKey(const Key& k);
+	void setElement(const Element& e);
+	void setColor(color c);
 };
 
 template <typename Key, typename Element>
@@ -47,60 +47,55 @@ Node<Key, Element>::Node() {
 template <typename Key, typename Element>
 Node<Key, Element>::~Node() {};
 
-// //template<typename Key, typename Element>
-// Node * Node<Key, Element>::getLeft() {
-// 	return left;
-// };
-//
-// //template<typename Key, typename Element>
-// Node * Node<Key, Element>::getRight() {
-// 	return right;
-// };
-//
-// //template<typename Key, typename Element>
-// Node * Node<Key, Element>::getParent() {
-// 	return parent;
-// }
-//
-// //template<typename Key, typename Element>
-// const color Node<Key, Element>::getColor() {
-// 	return colorVal;
-// }
-//
-// //template<typename Key, typename Element>
-// const Element& Node<Key, Element>::getElement() {
-// 	return element;
-// }
-//
-// //template<typename Key, typename Element>
-// Element& Node<Key, Element>::getElement() {
-// 	return element;
-// }
-//
-// //template<typename Key, typename Element>
-// const Key& Node<Key, Element>::getKey() {
-// 	return key;
-// }
-//
-// //template<typename Key, typename Element>
-// void Node<Key, Element>::setKey(const Key& k) {
-// 	key = k;
-// }
-//
-// //template<typename Key, typename Element>
-// void Node<Key, Element>::setElement(const Element& e) {
-// 	element = e;
-// }
-//
-// //template<typename Key, typename Element>
-// void Node<Key, Element>::setColor(const color c) {
-// 	colorVal = c;
-// }
+template<typename Key, typename Element>
+Node<Key, Element> * Node<Key, Element>::getLeft() {
+	return left;
+}
 
+template<typename Key, typename Element>
+Node<Key, Element> * Node<Key, Element>::getRight() {
+	return right;
+}
 
+template<typename Key, typename Element>
+Node<Key, Element> * Node<Key, Element>::getParent() {
+	return parent;
+}
 
+template<typename Key, typename Element>
+color Node<Key, Element>::getColor() {
+	return colorVal;
+}
 
+template<typename Key, typename Element>
+const Element& Node<Key, Element>::getElement() const {
+	return element;
+}
 
+template<typename Key, typename Element>
+Element& Node<Key, Element>::getElement() {
+	return element;
+}
+
+template<typename Key, typename Element>
+const Key& Node<Key, Element>::getKey() const {
+	return key;
+}
+
+template<typename Key, typename Element>
+void Node<Key, Element>::setKey(const Key& k) {
+	key = k;
+}
+
+template<typename Key, typename Element>
+void Node<Key, Element>::setElement(const Element& e) {
+	element = e;
+}
+
+template<typename Key, typename Element>
+void Node<Key, Element>::setColor(color c) {
+	colorVal = c;
+}
 
 // The following functions have been provided for you, and do not
 // need to be modified:
