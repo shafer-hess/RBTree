@@ -37,6 +37,11 @@ public:
 	void setKey(const Key& k);
 	void setElement(const Element& e);
 	void setColor(color c);
+
+	void setLeft(Node<Key, Element> * node);
+	void setRight(Node<Key, Element> * node);
+	void setParent(Node<Key, Element> * node);
+
 };
 
 template <typename Key, typename Element>
@@ -97,9 +102,20 @@ void Node<Key, Element>::setColor(color c) {
 	colorVal = c;
 }
 
-// The following functions have been provided for you, and do not
-// need to be modified:
+template<typename Key, typename Element>
+void Node<Key, Element>::setLeft(Node<Key, Element> * node) {
+	left = node;
+}
 
+template<typename Key, typename Element>
+void Node<Key, Element>::setRight(Node<Key, Element> * node) {
+	right = node;
+}
+
+template<typename Key, typename Element>
+void Node<Key, Element>::setParent(Node<Key, Element> * node) {
+	parent = node;
+}
 
 // Output stream operator overload -- writes the contents of a
 // Node to the specified output stream. Note that there must be
