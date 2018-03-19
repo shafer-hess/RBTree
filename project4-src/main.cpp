@@ -59,16 +59,17 @@ int main() {
 	n2->setElement("second");
 
 	tree->insert(n->getKey(), n->getElement());
-	cout << tree->getRoot()->getKey() << endl;
-	cout << tree->getRoot()->getElement() << endl;
+	//cout << tree->getRoot()->getKey() << endl;
+	//cout << tree->getRoot()->getElement() << endl;
 	
-	color c = tree->getRoot()->getColor();
-	cout << (c == 0 ? "RED" : "BLACK") << endl;
+	//color c = tree->getRoot()->getColor();
+	//cout << (c == 0 ? "RED" : "BLACK") << endl;
 
 
 	//tree->inorder(cout);
 	
-	//tree->insert(n2->getKey(), n2->getElement());
-
+	tree->insert(2, "second");
+	tree->insert(3, "third");
+	tree->inorder(cout);
 }
 

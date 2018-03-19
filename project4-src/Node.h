@@ -29,7 +29,7 @@ public:
 	const Element& getElement() const;
 	Element& getElement();
 
-	color getColor() /*const*/; /*{ return RED; }*/
+	color getColor() const; /*{ return RED; }*/
 	Node<Key, Element> * getParent();
 	Node<Key, Element> * getLeft();
 	Node<Key, Element> * getRight();
@@ -46,6 +46,9 @@ public:
 
 template <typename Key, typename Element>
 Node<Key, Element>::Node() {
+	left  = NULL;
+	right = NULL; 
+	parent = NULL;
 	colorVal = RED;
 };
 
@@ -54,21 +57,26 @@ Node<Key, Element>::~Node() {};
 
 template<typename Key, typename Element>
 Node<Key, Element> * Node<Key, Element>::getLeft() {
+	//if(this == NULL) { return NULL; }
 	return left;
 }
 
 template<typename Key, typename Element>
 Node<Key, Element> * Node<Key, Element>::getRight() {
+	//if(this == NULL) { return NULL; }
 	return right;
 }
 
 template<typename Key, typename Element>
 Node<Key, Element> * Node<Key, Element>::getParent() {
+	//if(this == NULL) { return NULL; }
 	return parent;
 }
 
 template<typename Key, typename Element>
-color Node<Key, Element>::getColor() {
+color Node<Key, Element>::getColor() const {
+	//return (colorVal == 0 ? RED : BLACK);
+	//if(this == NULL) { return RED;}
 	return colorVal;
 }
 
@@ -104,16 +112,25 @@ void Node<Key, Element>::setColor(color c) {
 
 template<typename Key, typename Element>
 void Node<Key, Element>::setLeft(Node<Key, Element> * node) {
+	//left = new Node<Key, Element>();
+	//left->setKey(node->getKey());
+	//left->setElement(node->getElement());
 	left = node;
 }
 
 template<typename Key, typename Element>
 void Node<Key, Element>::setRight(Node<Key, Element> * node) {
+	//right = new Node<Key, Element>();
+	//right->setKey(node->getKey());
+	//right->setElement(node->getElement());
 	right = node;
 }
 
 template<typename Key, typename Element>
 void Node<Key, Element>::setParent(Node<Key, Element> * node) {
+	//parent = new Node<Key, Element>();
+	//parent->setKey(node->getKey());
+	//parent->setElement(node->getElement());
 	parent = node;
 }
 
