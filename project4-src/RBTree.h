@@ -16,7 +16,7 @@ public:
 	// Implement each of these methods
   RBTree();
   void insert(const Key& k, const Element& e);
-  void BSTInsert(Node<Key, Element> * root, Node<Key, Element> * node);
+  Node<Key, Element> * BSTInsert(Node<Key, Element> * root, Node<Key, Element> * node);
   void fixViolation(Node<Key, Element> * root, Node<Key, Element> * node);
   Node<Key, Element>* search(const Key& k);
   void del(const Key& k);
@@ -26,39 +26,123 @@ public:
   void levelOrder(ostream& out) const;
   size_t size() const;
   Node<Key, Element>* getRoot();
+
+  void rotateLeft(Node<Key, Element> * &root, Node<Key, Element> * &node);
+  void rotateRight(Node<Key, Element> * &root, Node<Key, Element> * &node);
+
 };
 
 //Constructor
 template <typename Key, typename Element>
 RBTree<Key, Element>::RBTree() {
+  root = new Node<Key, Element>();
   treeSize = 0;
 }
 
 //Insert into RB tree using binary search tree implemnetation then fixViolation later
 template <typename Key, typename Element>
-void RBTree<Key, Element>::BSTInsert(Node<Key, Element> * root, Node<Key, Element> * node) {
+Node<Key, Element> * RBTree<Key, Element>::BSTInsert(Node<Key, Element> * root, Node<Key, Element> * node) {
   if(root == NULL) {
-    root->setKey(node->getKey());
-    root->setElement(node->getElement());
-    root->setColor(BLACK);
-    return;
+    return node;
   }
 
-  
+  if(node->getKey() < root->getKey()) {
+    root->setLeft(BSTInsert(root->getLeft(), node));
+    root->getLeft()->setParent(root);
+  }
 
+  else if(node->getKey() >= root->getKey()) {
+    root->setRight(BSTInsert(root->getRight(), node));
+    root->getRight()->setParent(root);
+  }
+
+  return root;
 
 }
 
 // Function to insert a new node with given data
 template <typename Key, typename Element>
 void RBTree<Key, Element>::insert(const Key& k, const Element& e) {
-  if(treeSize == 0) {
-    root = new Node<Key, Element>;
-    root->setKey(k);
-    root->setElement(e);
-    root->setColor(BLACK);
-    treeSize++;
+  Node<Key, Element> * node = new Node<Key, Element>();
+  node->setKey(k);
+  node->setElement(e);
+
+  root = BSTInsert(root, node);
+  //fixViolation(root, node);
+  treeSize++;
+
+
+  // if(treeSize == 0) {
+  //   root = new Node<Key, Element>;
+  //   root->setKey(k);
+  //   root->setElement(e);
+  //   root->setColor(BLACK);
+  //   treeSize++;
+  // }
+  //
+  // else {
+  //     Node<Key, Element> * node = new Node<Key, Element>;
+  //     node->setKey(k);
+  //     node->setElement(e);
+  //     root = BSTInsert(root, node);
+  //     //fixViolation(root, node);
+  //     treeSize++;
+  // }
+}
+
+template <typename Key, typename Element>
+void RBTree<Key, Element>::rotateLeft(Node<Key, Element> * &root, Node<Key, Element> * &node) {
+  Node<Key, Element> * nRight = node->getRight();
+  node->setRight(nRight->getLeft());
+
+  if(node->getRight() != NULL) {
+    node->getRight()->setParent(node);
   }
+
+  nRight->setParent(node->getParent());
+
+  if(node->getParent() == NULL) {
+    root = nRight;
+  }
+
+  else if(node == node->getParent()->getLeft()) {
+    node->getParent()->setLeft(nRight);
+  }
+
+  else {
+    node->getParent()->setRight(nRight);
+  }
+
+  nRight->setLeft(node);
+  node->setParent(nRight);
+
+}
+
+template <typename Key, typename Element>
+void RBTree<Key, Element>::rotateRight(Node<Key, Element> * &root, Node<Key, Element> * &node) {
+  Node<Key, Element> * nLeft = node->getLeft();
+  node->setLeft(nLeft->getRight());
+
+  if(node->getLeft() != NULL) {
+    node->getLeft()->setParent(node);
+  }
+
+  nLeft->setParent(node->getParent());
+
+  if(node->getParent() == NULL) {
+    root = nLeft;
+  }
+
+  else if(node == node->getParent()->getLeft()) {
+    node->getParent()->setLeft(nLeft);
+  }
+
+  else {
+    node->getParent()->setRight(nLeft);
+  }
+
+  nLeft->setRight(node);
+  node->setParent(nLeft);
 }
 
 // Function to search a node with given data

@@ -7,6 +7,7 @@ using namespace std;
 
 int main() {
 
+	/*
 	Node<int, string> * n = new Node<int, string>();
 
 	color c = n->getColor();
@@ -44,7 +45,30 @@ int main() {
 	tree->inorder(cout);
 
 //	delete n;
+	*/
 
+	RBTree<int, string> * tree = new RBTree<int, string>();
+
+
+	Node<int, string> * n = new Node<int, string>();
+	n->setKey(1);
+	n->setElement("first");
+
+	Node<int, string> * n2 = new Node<int, string>();
+	n2->setKey(2);
+	n2->setElement("second");
+
+	tree->insert(n->getKey(), n->getElement());
+	cout << tree->getRoot()->getKey() << endl;
+	cout << tree->getRoot()->getElement() << endl;
+	
+	color c = tree->getRoot()->getColor();
+	cout << (c == 0 ? "RED" : "BLACK") << endl;
+
+
+	//tree->inorder(cout);
+	
+	//tree->insert(n2->getKey(), n2->getElement());
 
 }
 
