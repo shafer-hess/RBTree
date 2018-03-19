@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include <iostream>
+#include <queue>
 using namespace std;
 
 template <typename Key, typename Element>
@@ -208,7 +209,23 @@ void RBTree<Key, Element>::rotateRight(Node<Key, Element> * &root, Node<Key, Ele
 // Function to search a node with given data
 template <typename Key, typename Element>
 Node<Key, Element>* RBTree<Key, Element>::search(const Key& k) {
+	Node<Key, Element> * node = root;
+	while(node != NULL) {
+		if(node->getKey() == k) {
+			return node;
+		}
+		
+		else if(k > node->getKey()) {
+			node = node->getRight();
+		}		
+	
+		else {
+			node = node->getLeft();
+		}
+	}
+
 	return NULL;
+	
 }
 
 // Function to delete a node with given data
@@ -235,7 +252,25 @@ void RBTree<Key, Element>::inorder(ostream& out) const {
 
 template <typename Key, typename Element>
 void RBTree<Key, Element>::levelOrderHelper(ostream& out, Node<Key, Element> * node) const {
-
+	if(node == NULL) {
+		return;
+	}
+	
+	queue<Node<Key,Element> *> queue;
+	queue.push(node);
+	
+	while(!queue.empty()) {
+		Node<Key, Element> * tmp = queue.front();
+		out << *tmp << endl;
+		queue.pop();
+		
+		if(tmp->getLeft() != NULL) {
+			queue.push(tmp->getLeft());
+		}
+		if(tmp->getRight() != NULL) {
+			queue.push(tmp->getRight());
+		}
+	}
 }
 
 // Function to perform level-order traversal
