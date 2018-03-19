@@ -1,9 +1,6 @@
 #ifndef VALIDATE_H
 #define VALIDATE_H
 
-#include <sstream>
-#include <vector>
-#include <algorithm>
 #include <RBTree.h>
 
 // Test that the root is black
@@ -72,45 +69,13 @@ bool depthProp(Node<K,E>* root) {
 		return depthProp(l) && depthProp(r);
 }
 
-// Test that all keys are in the correct order
-template <typename K, typename E>
-bool ordered(RBTree<K,E>& rbt) {
-	// Write the inorder traversal to stringstream
-	stringstream ss;
-	rbt.inorder(ss);
-
-	// Extract each key
-	vector<K> keys;
-	for (int i = 0; i < rbt.size(); i++) {
-		K k; E e;
-		ss >> k >> e;
-		keys.push_back(k);
-	}
-
-	return is_sorted(keys.begin(), keys.end());
-}
-
 // Test all Red-Black properties (except external property, which
 // is implied)
 template <typename K, typename E>
 bool validate(RBTree<K,E>& rbt) {
-	if (!rootProp<K,E>(rbt.getRoot())) {
-		cout << "Root is not black!" << endl;
-		return false;
-	}
-	if (!internalProp<K,E>(rbt.getRoot())) {
-		cout << "A double red was found!" << endl;
-		return false;
-	}
-	if (!depthProp<K,E>(rbt.getRoot())) {
-		cout << "All leaves do not have the same black-depth!" << endl;
-		return false;
-	}
-	if (!ordered<K,E>(rbt)) {
-		cout << "Tree is not ordered!" << endl;
-		return false;
-	}
-	return true;
+	return rootProp<K,E>(rbt.getRoot()) &&
+		internalProp<K,E>(rbt.getRoot()) &&
+		depthProp<K,E>(rbt.getRoot());
 }
 
 #endif

@@ -83,7 +83,7 @@ function generateMaps {
 	src=$2
 	dest=$3
 	args="$2 $3.out"
-	timeout 120 ./$prog $args
+	timeout 90 ./$prog $args
 	args="$2 $3.org.out"
 	./$prog.org $args
 }
@@ -207,8 +207,7 @@ then
 	runtest test1-4 "" 14
 	runtest2 test1-5 "" 14 0
 	runtest2 test1-6 "" 7 0
-	runtest2 test1-7 "" 8 1
-	runtest2 test1-8 "" 2 1
+	runtest2 test1-7 "" 10 1
 fi
 
 if [ $# = 0 ] || [ "$1" = "-p2" ]
