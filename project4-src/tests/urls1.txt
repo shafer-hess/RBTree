@@ -1,4 +1,4 @@
-109
+108
 http://www.purdue.edu/purdue/ea_eou_statement.html
 https://www.purdue.edu/fix-it/Maintenance/Index
 https://www.cs.purdue.edu/resources/facilities/system-status.html
@@ -35,7 +35,6 @@ https://www.cs.purdue.edu/undergraduate/index.html
 https://www.purdue.edu/physicalfacilities/asset-management/Space-Management/
 https://www.purdue.edu/purdue/admissions/index.php
 http://www.purdue.edu/purdue/disclaimer.html
-https://www.purdue.edu/purdue/athletics/index.php
 https://www.cs.purdue.edu/people/index.html
 https://www.cs.purdue.edu/research/index.html
 https://www.purdue.edu/purdue/prospective_students/index.php
