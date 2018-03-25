@@ -2,9 +2,9 @@ test2-1                                                : 4   of 4
 test2-2                                                : 4   of 4  
 test2-3                                                : 4   of 4  
 test2-4                                                : 0   of 3  
-test2-5                                                : 0   of 3  
+test2-5                                                : 3   of 3  
 test2-6                                                : 0   of 3  
-test2-7                                                : 0   of 3  
+test2-7                                                : 3   of 3  
 test2-8                                                : 0   of 3  
 test2-9                                                : 0   of 3  
-CS251: . hess33 Mon Mar 19 18:50:49 EDT 2018  Total:  12 of 30
+CS251: . hess33 Fri Mar 23 08:39:47 EDT 2018  Total:  18 of 30
