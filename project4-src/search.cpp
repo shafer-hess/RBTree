@@ -4,7 +4,9 @@
 #include <vector>
 #include <string.h>
 #include <stdio.h>
+#include <locale>
 
+#include "Node.h"
 #include "RBTree.h"
 using namespace std;
 
@@ -16,93 +18,19 @@ string toLower(string &text) {
 	}
 	return text;
 }
-
 /*
-void sortVectorFrequencies(vector<pair<string,int>> &vector) {
-	for(int i = 0; i < vector.size(); i++) {
-		for(int j = i + 1; j < vector.size() - 1; j++) {
-			if(vector[i].second < vector[j].second) {
-				//Swap
-				string temp = vector[i].first;
-				int frequency = vector[i].second;
-				
-				vector[i].first = vector[j].first;
-				vector[i].second = vector[j].second;
-	
-				vector[j].first = temp;
-				vector[j].second = frequency;
-			}
-		}
-	}
+bool compareURL(pair<string,int> URL1, pair<string,int> URL2) {
+	return URL1.first < URL2.first;
 }
-
-void sortVectorURL(vector<pair<string,int>>& vector) {
-	for(int i = 0; i < vector.size(); i++) {
-		for(int j = i + 1; j < vector.size() - 1; j++) {
-			if(strcmp(vector[i].first.c_str(), vector[j].first.c_str()) > 0) {
-				//Swap
-				cout << "REACHED" << endl;
-				string temp = vector[i].first;
-				int frequency = vector[i].second;
-				
-				vector[i].first = vector[j].first;
-				vector[i].second = vector[j].second;
-	
-				vector[j].first = temp;
-				vector[j].second = frequency;
-			}	
-		}
-	}
-}
-*/
-
-vector<pair<string,int>> format(vector<vector<pair<string,int>>> list) {
-	vector<pair<string,int>> vec;
-	for(int i = 0; i < list.size(); i++) {
-		vector<pair<string,int>> inner = list[i];
-		for(int j = 0; j < inner.size(); j++) {
-			vec.push_back(inner[j]);
-		}
-	}
-
-	return vec;
-}
-
-vector<pair<string,int>> findIntersections(vector<pair<string,int>> vec) {
-	vector<pair<string,int>> intersections;
-	for(int i = 0; i < vec.size(); i++) {
-		int offset = 1;
-		for(int j = i  + offset; j < vec.size(); j++) {
-			if(vec[i].first == vec[j].first) {
-				pair<string,int> combine = make_pair(vec[i].first, vec[i].second + vec[j].second);
-				intersections.push_back(combine);
-			}
-			offset++;	
-		}
-	}
-	return intersections;
-}
-
-bool compareURL(pair<string,int> URL1, pair<string,int> URL2) { return strcmp(URL1.first.c_str(),URL2.first.c_str()) < 0; }
 
 bool compareFrequencies(pair<string,int> freq1, pair<string,int> freq2) {
-	if(freq1.second == freq2.second) {
-		return compareURL(freq1,freq2);
-	}
-
 	return freq1.second > freq2.second;
 }
-
-void sortFrequencies(vector<pair<string,int>>& vector) {
-	sort(vector.begin(), vector.end(), compareFrequencies);
-}
-
-void sortURL(vector<pair<string,int>>& vector) {
-	sort(vector.begin(), vector.end(), compareURL);
-}
-
+*/
 // Input stream operator overload for node elements
 istream& operator>>(istream& in, vector<pair<string, int>>& e);
+bool compareURL(pair<string,int> URL1, pair<string,int> URL2);
+bool compareFrequencies(pair<string,int> freq1, pair<string,int> freq2);
 
 int main(int argc, char** argv) {
 	// Implement your search code here
@@ -137,46 +65,79 @@ int main(int argc, char** argv) {
 
 	//Search tree for word
 	vector<vector<pair<string,int>>> foundWords;
+	vector<pair<string,int>> element;
 	for(int i = 0; i < queries.size(); i++) {
 		Node<string,vector<pair<string,int>>> * node = tree.search(queries[i]);
 		//if(node == NULL) { cout << "NULL" << endl; }
-		if(node != NULL) {
-			vector<pair<string,int>> element = node->getElement();
+		if(node == NULL) {
+			foundWords.push_back({});
+		}
+		else {
+			element = node->getElement();
 			foundWords.push_back(element);
 		}
-		/*
-		if(node == NULL) {
-			vector<pair<string,int>> blankElement;
-			foundWords.push_back(blankElement);
-		}
-		*/	
 	}
 
-	if(foundWords.size() == 0) { cout << "Not found" << endl;}
+	//if(foundWords.size() == 0) { cout << "Not found" << endl; return 0;}
 	
-	vector<pair<string,int>> allPairs;
-	allPairs = format(foundWords);	
-
 	//cout << "FOUND WORD: " << foundWords.size() << endl;
-	//cout << "ALL PAIRS: " << allPairs.size() << endl;
-	
-	vector<pair<string,int>> intersections = findIntersections(allPairs);
-	//cout << "INTERSECTION SIZE: " << intersections.size() << endl;
-	
-	if(intersections.size() == 0) {
-		for(int i = 0; i < allPairs.size(); i++) {
-			cout << allPairs[i].first << " " << allPairs[i].second << endl;
+		
+	vector<pair<string,int>> intersections;
+	while(foundWords.size() > 1) {
+		vector<pair<string,int>> v1 = foundWords.back();
+		foundWords.pop_back();
+		vector<pair<string,int>> v2 = foundWords.back();
+		foundWords.pop_back();
+
+		vector<pair<string,int>> list;
+
+		sort(v1.begin(), v1.end(), compareURL);
+		sort(v2.begin(), v2.end(), compareURL);
+
+		int i = 0;
+		int j = 0;
+		while(i < v1.size() && j < v2.size()) {
+			//cout << "reached" << endl;
+			if(v1.at(i).first < v2.at(j).first) {
+				i++;
+			}
+			else if(v1.at(i).first > v2.at(j).first) {
+				j++;
+			}
+			else if(v1.at(i).first == v2.at(j).first) {
+				//cout << "reached" << endl;
+				int frequency = v1.at(i).second + v2.at(j).second;
+				pair<string,int> pair = make_pair(v1.at(i).first, frequency);
+				list.push_back(pair);
+				i++;
+				j++;
+			}
 		}
+		foundWords.push_back(list);
 	}
+	
+	intersections = foundWords.back();
+	foundWords.pop_back();	
+
+	sort(intersections.begin(), intersections.end(), compareURL);
+	sort(intersections.begin(), intersections.end(), compareFrequencies);
+	
+	if(intersections.size() == 0) { cout << "Not found" << endl; }
 	
 	else {
-		sortFrequencies(intersections);
 		for(int i = 0; i < intersections.size(); i++) {
 			cout << intersections[i].first << " " << intersections[i].second << endl;
 		}
 	}
 	
 	return 0;
+}
+bool compareURL(pair<string,int> URL1, pair<string,int> URL2) {
+	return URL1.first < URL2.first;
+}
+
+bool compareFrequencies(pair<string,int> freq1, pair<string,int> freq2) {
+	return freq1.second > freq2.second;
 }
 
 // This function overloads the input stream operator for Node

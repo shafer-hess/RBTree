@@ -223,7 +223,7 @@ then
 
 	generateMaps ../scan "urls3.txt" "wordmap3"
 	rundiff "wordmap3.out" "wordmap3.org.out" "test2-3" 4
-
+	
 
 	runSearch ../search "wordmap1.org.out" "science" "test2-4" 3
 
